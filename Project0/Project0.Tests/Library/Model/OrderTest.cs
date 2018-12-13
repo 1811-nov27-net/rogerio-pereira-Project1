@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Project0.Tests.Library.Model
+namespace Project1.Tests.Library.Model
 {
     public class OrderTest
     {

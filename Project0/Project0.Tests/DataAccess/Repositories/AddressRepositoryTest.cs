@@ -6,7 +6,7 @@ using Xunit;
 using Project1.DataAccess.Repositories;
 using System.Collections.Generic;
 
-namespace Project0.Tests.DataAccess.Repositories
+namespace Project1.Tests.DataAccess.Repositories
 {
     public class AddressRepositoryTest
     {
