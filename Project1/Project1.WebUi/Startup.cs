@@ -46,8 +46,26 @@ namespace Project1.WebUi
 
             //Mapper
             Mapper.Initialize(cfg => {
+                cfg.CreateMap<Addresses, Address>();
+                cfg.CreateMap<Address, Addresses>();
+
+                cfg.CreateMap<Customers, Customer>();
+                cfg.CreateMap<Customer, Customers>();
+
                 cfg.CreateMap<Ingredients, Ingredient>();
                 cfg.CreateMap<Ingredient, Ingredients>();
+
+                cfg.CreateMap<OrderPizzas, OrderPizza>();
+                cfg.CreateMap<OrderPizza, OrderPizzas>();
+
+                cfg.CreateMap<Orders, Order>();
+                cfg.CreateMap<Order, Orders>();
+
+                cfg.CreateMap<Pizzas, Pizza>();
+                cfg.CreateMap<Pizza, Pizzas>();
+
+                cfg.CreateMap<PizzasIngredients, PizzaIngredient>();
+                cfg.CreateMap<PizzaIngredient, PizzasIngredients>();
             });
 
             services.AddDbContext<Project1Context>(optionsBuilder => optionsBuilder.UseSqlServer(Configuration.GetConnectionString("Project1")));
