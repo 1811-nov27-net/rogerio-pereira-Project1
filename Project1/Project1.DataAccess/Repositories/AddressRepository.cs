@@ -22,7 +22,7 @@ namespace Project1.DataAccess.Repositories
 
         public void Delete(int id)
         {
-            Addresses tracked = _db.Addresses.Find(id);
+            Addresses tracked = GetById(id);
             if (tracked == null)
             {
                 throw new ArgumentException("No Address with this id", nameof(id));

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project1.WebUi", "Project1.WebUi\Project1.WebUi.csproj", "{F3EE03B6-AEB8-4072-9914-6989044DB5FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project1.WebUi", "Project1.WebUi\Project1.WebUi.csproj", "{F3EE03B6-AEB8-4072-9914-6989044DB5FC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project0.Library", "..\Project0\Project0.Library\Project0.Library.csproj", "{3545B43D-410A-4745-A573-8021EA814BD9}"
 EndProject

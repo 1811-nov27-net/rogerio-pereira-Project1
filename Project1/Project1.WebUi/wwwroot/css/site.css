@@ -49,3 +49,8 @@ body {
 /*--------------------------------------------------*/
 main{
 }
+
+/*-------------------CUSTOM BOOTSTRAP----------------*/
+.breadcrumb {
+    background-color: transparent;
+}

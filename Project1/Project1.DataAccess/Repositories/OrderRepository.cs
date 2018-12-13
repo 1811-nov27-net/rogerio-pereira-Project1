@@ -23,7 +23,7 @@ namespace Project1.DataAccess.Repositories
 
         public void Delete(int id)
         {
-            Orders tracked = _db.Orders.Find(id);
+            Orders tracked = GetById(id);
             if (tracked == null)
             {
                 throw new ArgumentException("No Order with this id", nameof(id));

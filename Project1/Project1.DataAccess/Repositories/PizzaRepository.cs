@@ -22,7 +22,7 @@ namespace Project1.DataAccess.Repositories
 
         public void Delete(int id)
         {
-            Pizzas tracked = _db.Pizzas.Find(id);
+            Pizzas tracked = GetById(id);
             if (tracked == null)
             {
                 throw new ArgumentException("No Pizza with this id", nameof(id));

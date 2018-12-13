@@ -17,12 +17,12 @@ namespace Project1.DataAccess.Repositories
             _db = db ?? throw new ArgumentNullException(nameof(db));
 
             // code-first style, make sure the database exists by now.
-            db.Database.EnsureCreated();
+            //db.Database.EnsureCreated();
         }
 
         public void Delete(int id)
         {
-            Ingredients tracked = _db.Ingredients.Find(id);
+            Ingredients tracked = GetById(id);
             if (tracked == null)
             {
                 throw new ArgumentException("No Ingredient with this id", nameof(id));
@@ -30,9 +30,9 @@ namespace Project1.DataAccess.Repositories
             _db.Remove(tracked);
         }
 
-        public IList GetAll()
+        public IEnumerable GetAll()
         {
-            return (List<Ingredients>) _db.Ingredients.ToList();
+            return _db.Ingredients.ToList();
         }
 
         public Ingredients GetById(int id)
@@ -40,9 +40,9 @@ namespace Project1.DataAccess.Repositories
             return _db.Ingredients.Find(id);
         }
 
-        public IList GetByName(string name)
+        public IEnumerable GetByName(string name)
         {
-            return (List<Ingredients>)_db.Ingredients.Where(model => model.Name.Contains(name)).ToList();
+            return _db.Ingredients.Where(model => model.Name.Contains(name)).ToList();
         }
 
         public Ingredients Save(Ingredients model, int? id = null)

@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Project1.DataAccess\Project1.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>

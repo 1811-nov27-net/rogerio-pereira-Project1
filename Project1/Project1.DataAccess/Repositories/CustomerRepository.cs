@@ -22,7 +22,7 @@ namespace Project1.DataAccess.Repositories
 
         public void Delete(int id)
         {
-            Customers tracked = _db.Customers.Find(id);
+            Customers tracked = GetById(id);
             if (tracked == null)
             {
                 throw new ArgumentException("No Customer with this id", nameof(id));

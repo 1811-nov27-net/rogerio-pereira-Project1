@@ -10,7 +10,7 @@ namespace Project1.DataAccess
     {
         public Addresses()
         {
-            Orders = new HashSet<Orders>();
+            Orders = new List<Orders>();
         }
 
         [Column("id")]

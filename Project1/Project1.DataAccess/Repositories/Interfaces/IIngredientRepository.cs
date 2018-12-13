@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Project1.DataAccess.Repositories.Interfaces
 {
@@ -6,9 +7,9 @@ namespace Project1.DataAccess.Repositories.Interfaces
     {
         Ingredients Create(Ingredients model);
         void Delete(int id);
-        IList GetAll();
+        IEnumerable GetAll();
         Ingredients GetById(int id);
-        IList GetByName(string name);
+        IEnumerable GetByName(string name);
         Ingredients Save(Ingredients model, int? id = null);
         void SaveChanges();
         Ingredients Update(Ingredients model, int? id = null);

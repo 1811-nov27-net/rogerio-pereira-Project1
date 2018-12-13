@@ -18,6 +18,8 @@
     <!--Font-->
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <!--Icons-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <!--CSS-->
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -40,8 +42,35 @@
         </nav>
     </header>
 
+    <!--Delete Modal-->
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <p>
+                        You are about to delete the <span id="deleteModal-model"></span> <br/>
+                        "<strong id="deleteModal-name"></strong>" - ID: "<strong id="deleteModal-id"></strong>".
+                    </p>
+                    <p>Do you want to proceed?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <form id="deleteModal-formDelete" method="post" action="">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger btn-ok">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
-        <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -73,7 +102,15 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <!--Modal-->
+    <script>
+        $('#confirm-delete').on('show.bs.modal', function (e) {
+            $(this).find('#deleteModal-id').html($(e.relatedTarget).data('id'));
+            $(this).find('#deleteModal-model').html($(e.relatedTarget).data('model'));
+            $(this).find('#deleteModal-name').html($(e.relatedTarget).data('name'));
+            $(this).find('#deleteModal-formDelete').attr('action', $(e.relatedTarget).data('href'));
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

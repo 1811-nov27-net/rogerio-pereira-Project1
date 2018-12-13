@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Project1.DataAccess.Repositories;
 using Project1.DataAccess.Repositories.Interfaces;
 using Project1.DataAccess;
+using AutoMapper;
+using Project1.WebUi.Models;
 
 namespace Project1.WebUi
 {
@@ -42,6 +44,11 @@ namespace Project1.WebUi
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IPizzaRepository, PizzaRepository>();
 
+            //Mapper
+            Mapper.Initialize(cfg => {
+                cfg.CreateMap<Ingredients, Ingredient>();
+                cfg.CreateMap<Ingredient, Ingredients>();
+            });
 
             services.AddDbContext<Project1Context>(optionsBuilder => optionsBuilder.UseSqlServer(Configuration.GetConnectionString("Project1")));
 
