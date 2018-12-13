@@ -1,9 +1,9 @@
-﻿using Project0.DataAccess;
+﻿using Project1.DataAccess;
 using System;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Xunit;
-using Project0.DataAccess.Repositories;
+using Project1.DataAccess.Repositories;
 using System.Collections.Generic;
 
 namespace Project0.Tests.DataAccess.Repositories

@@ -1,9 +1,9 @@
-﻿using Project0.DataAccess;
+﻿using Project1.DataAccess;
 using System;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Xunit;
-using Project0.DataAccess.Repositories;
+using Project1.DataAccess.Repositories;
 using System.Collections.Generic;
 
 namespace Project0.Tests.DataAccess.Repositories
@@ -14,12 +14,12 @@ namespace Project0.Tests.DataAccess.Repositories
         public void CreateIngredientsWorks()
         {
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db__ingredient_test_create").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
                 Ingredients ingredient = new Ingredients { Name = "Test", Stock = 10 };
@@ -28,7 +28,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 Ingredients ingredient = db.Ingredients.First(m => m.Name == "Test");
                 Assert.Equal("Test", ingredient.Name);
@@ -43,12 +43,12 @@ namespace Project0.Tests.DataAccess.Repositories
             List<Ingredients> list = new List<Ingredients>();
 
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db__ingredient_test_getAll").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
 
@@ -62,7 +62,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
                 List<Ingredients> ingredients = (List<Ingredients>)repo.GetAll();
@@ -83,12 +83,12 @@ namespace Project0.Tests.DataAccess.Repositories
             int id = 0;
 
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db__ingredient_test_getById").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
 
@@ -99,7 +99,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
                 Ingredients ingredient = (Ingredients)repo.GetById(id);
@@ -118,12 +118,12 @@ namespace Project0.Tests.DataAccess.Repositories
             int id = 100;
 
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db__ingredient_test_getById").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            /*using (var db = new Project0Context(options))
+            /*using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
 
@@ -134,7 +134,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }*/
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
                 Ingredients ingredient = (Ingredients)repo.GetById(id);
@@ -152,12 +152,12 @@ namespace Project0.Tests.DataAccess.Repositories
             int id = 0;
 
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db__ingredient_test_getByName_List").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
 
@@ -177,7 +177,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
                 List<Ingredients> list = (List<Ingredients>)repo.GetByName(name);
@@ -202,12 +202,12 @@ namespace Project0.Tests.DataAccess.Repositories
             string name = "Not existing name";
 
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db__ingredient_test_getByName").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
 
@@ -217,7 +217,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
                 List<Ingredients> listIngredients = (List<Ingredients>)repo.GetByName(name);
@@ -231,12 +231,12 @@ namespace Project0.Tests.DataAccess.Repositories
         {
             int id = 0;
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db__ingredient_test_delete").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
 
@@ -247,7 +247,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
                 Ingredients ingredient = (Ingredients)repo.GetById(id);
@@ -269,12 +269,12 @@ namespace Project0.Tests.DataAccess.Repositories
         {
             int id = 1000;
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db__ingredient_test_delete").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            /*using (var db = new Project0Context(options))
+            /*using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
 
@@ -285,7 +285,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }*/
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
                 Ingredients ingredient = (Ingredients)repo.GetById(id);
@@ -302,12 +302,12 @@ namespace Project0.Tests.DataAccess.Repositories
         {
             int id = 0;
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db__ingredient_test_update").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
 
@@ -318,7 +318,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
                 Ingredients ingredient = (Ingredients)repo.GetById(id);
@@ -348,12 +348,12 @@ namespace Project0.Tests.DataAccess.Repositories
             int id = 0;
             int idWrong = 1000;
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db__ingredient_test_update").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
 
@@ -364,7 +364,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new IngredientRepository(db);
                 Ingredients ingredient = (Ingredients)repo.GetById(id);

@@ -1,9 +1,9 @@
-﻿using Project0.DataAccess;
+﻿using Project1.DataAccess;
 using System;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Xunit;
-using Project0.DataAccess.Repositories;
+using Project1.DataAccess.Repositories;
 using System.Collections.Generic;
 
 namespace Project0.Tests.DataAccess.Repositories
@@ -14,12 +14,12 @@ namespace Project0.Tests.DataAccess.Repositories
         public void CreateCustomersWorks()
         {
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db_customer_test_create").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
 
@@ -30,7 +30,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 Customers customer = db.Customers.Include(m => m.Addresses).First(m => m.FirstName == "First Name" && m.LastName == "Last Name");
                 List<Addresses> listAddress = customer.Addresses.ToList();
@@ -57,12 +57,12 @@ namespace Project0.Tests.DataAccess.Repositories
             List<Customers> list = new List<Customers>();
 
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db_customer_test_getAll").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
 
@@ -76,7 +76,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
                 List<Customers> customers = (List<Customers>)repo.GetAll();
@@ -98,12 +98,12 @@ namespace Project0.Tests.DataAccess.Repositories
             List<Addresses> listAddresses = new List<Addresses>();
 
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db_customer_test_create_address").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
                 Customers customer = new Customers { FirstName = "First Name", LastName = "Last Name" };
@@ -125,7 +125,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 Customers customer = db.Customers.Include(m => m.Addresses).First(m => m.FirstName == "First Name" && m.LastName == "Last Name");
                 List<Addresses> addresses = customer.Addresses.ToList();
@@ -149,12 +149,12 @@ namespace Project0.Tests.DataAccess.Repositories
         public void GetAllAddressWithNoAddressShouldReturnNull()
         {
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db_customer_test_create_address_2").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
                 Customers customer = new Customers { FirstName = "First Name", LastName = "Last Name" };
@@ -164,7 +164,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 Customers customer = db.Customers.Include(m => m.Addresses).First(m => m.FirstName == "First Name" && m.LastName == "Last Name");
                 List<Addresses> addresses = customer.Addresses.ToList();
@@ -179,12 +179,12 @@ namespace Project0.Tests.DataAccess.Repositories
             int id = 0;
 
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db_customer_test_getById").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
 
@@ -195,7 +195,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
                 Customers customer = (Customers)repo.GetById(id);
@@ -212,12 +212,12 @@ namespace Project0.Tests.DataAccess.Repositories
             int id = 100;
 
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db_customer_test_getById").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
                 Customers customer = (Customers)repo.GetById(id);
@@ -235,12 +235,12 @@ namespace Project0.Tests.DataAccess.Repositories
             int id = 0;
 
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db_customer_test_getByName_List").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
 
@@ -260,7 +260,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
                 List<Customers> list = (List<Customers>)repo.GetByName(name);
@@ -287,12 +287,12 @@ namespace Project0.Tests.DataAccess.Repositories
             string name = "existing";
 
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db_customer_test_getByName").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
 
@@ -312,7 +312,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
                 List<Customers> list = (List<Customers>)repo.GetByName(name);
@@ -326,12 +326,12 @@ namespace Project0.Tests.DataAccess.Repositories
         {
             int id = 0;
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db_customer_test_delete").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
 
@@ -343,7 +343,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
                 Customers customer = (Customers)repo.GetById(id);
@@ -365,14 +365,14 @@ namespace Project0.Tests.DataAccess.Repositories
         {
             int id = 1000;
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db_customer_test_delete").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
                 Customers customer = (Customers)repo.GetById(id);
@@ -389,12 +389,12 @@ namespace Project0.Tests.DataAccess.Repositories
         {
             int id = 0;
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db_customer_test_update").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
 
@@ -405,7 +405,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
                 Customers customer = (Customers)repo.GetById(id);
@@ -435,12 +435,12 @@ namespace Project0.Tests.DataAccess.Repositories
             int id = 0;
             int idWrong = 1000;
             // arrange (use the context directly - we assume that works)
-            var options = new DbContextOptionsBuilder<Project0Context>()
+            var options = new DbContextOptionsBuilder<Project1Context>()
                 .UseInMemoryDatabase("db_customer_test_update").Options;
-            using (var db = new Project0Context(options)) ;
+            using (var db = new Project1Context(options)) ;
 
             // act (for act, only use the repo, to test it)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
 
@@ -451,7 +451,7 @@ namespace Project0.Tests.DataAccess.Repositories
             }
 
             // assert (for assert, once again use the context directly for verify.)
-            using (var db = new Project0Context(options))
+            using (var db = new Project1Context(options))
             {
                 var repo = new CustomerRepository(db);
                 Customers customer = (Customers)repo.GetById(id);
