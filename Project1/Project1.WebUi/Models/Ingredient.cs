@@ -18,7 +18,7 @@ namespace Project1.WebUi.Models
         [Range(0, double.PositiveInfinity)]
         public int Stock { get; set; }
         
-        //public virtual List<PizzasIngredients> PizzasIngredients { get; set; }
+        public virtual List<PizzaIngredient> PizzasIngredients { get; set; }
 
         public override string ToString()
         {
