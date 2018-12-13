@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Project0.DataAccess;
-using Project0.DataAccess.Repositories;
+//using Project0.DataAccess;
+//using Project0.DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,11 +9,11 @@ namespace Project0.Library.Control.Model
 {
     public class AddressController
     {
-        AddressRepository repository = null;
+        /*AddressRepository repository = null;
 
         public AddressController()
         {
-            repository = new AddressRepository(DbOptions.Context);
+            repository = new AddressRepository(Project1Context.Context);
         }
 
         public List<Addresses> getAll()
@@ -60,6 +60,6 @@ namespace Project0.Library.Control.Model
         {
             repository.SetDefaultAddress(addressId, customerId);
             repository.SaveChanges();
-        }
+        }*/
     }
 }
