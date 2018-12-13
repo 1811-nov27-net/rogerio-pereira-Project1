@@ -30,7 +30,12 @@ namespace Project1.WebUi.Controllers
         // GET: Ingredient/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Ingredient ingredient = Mapper.Map<Ingredients, Ingredient>(Repository.GetById(id));
+            if (ingredient != null)
+            {
+                return View(ingredient);
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Ingredient/Create
