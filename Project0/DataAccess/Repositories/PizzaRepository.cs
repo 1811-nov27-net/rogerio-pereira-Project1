@@ -1,47 +1,51 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Project0.DataAccess.Repositories.Interfaces;
+using Project1.DataAccess.Repositories.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Project0.DataAccess.Repositories
+namespace Project1.DataAccess.Repositories
 {
-    public class PizzaRepository : ARepository, IPizzaRepository
+    public class PizzaRepository : IPizzaRepository
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="db">Project0Context</param>
-        public PizzaRepository(Project0Context db) : base(db) { }
+        private readonly Project1Context _db;
 
-        public override void Delete(int id)
+        public PizzaRepository(Project1Context db)
         {
-            Pizzas tracked = Db.Pizzas.Find(id);
+            _db = db ?? throw new ArgumentNullException(nameof(db));
+
+            // code-first style, make sure the database exists by now.
+            db.Database.EnsureCreated();
+        }
+
+        public void Delete(int id)
+        {
+            Pizzas tracked = _db.Pizzas.Find(id);
             if (tracked == null)
             {
                 throw new ArgumentException("No Pizza with this id", nameof(id));
             }
-            Db.Remove(tracked);
+            _db.Remove(tracked);
         }
 
-        public override IList GetAll()
+        public IList GetAll()
         {
-            return (List<Pizzas>) Db.Pizzas.ToList();
+            return (List<Pizzas>) _db.Pizzas.ToList();
         }
 
         public IList GetAllWithIngredients()
         {
-            return (List<Pizzas>)Db.Pizzas
+            return (List<Pizzas>)_db.Pizzas
                     .Include(pizza => pizza.PizzasIngredients)
                     .ThenInclude(pizzasIngredients => pizzasIngredients.Ingredient)
                     .ToList();
         }
 
-        public override AModel GetById(int id)
+        public Pizzas GetById(int id)
         {
-            return Db.Pizzas
+            return _db.Pizzas
                     .Include(pizza => pizza.PizzasIngredients)
                     .ThenInclude(pizzasIngredients => pizzasIngredients.Ingredient)
                     .Where(model => model.Id == id)
@@ -49,36 +53,44 @@ namespace Project0.DataAccess.Repositories
                     .First();
         }
 
-        public override IList GetByName(string name)
+        public IList GetByName(string name)
         {
-            return (List<Pizzas>)Db.Pizzas
+            return (List<Pizzas>)_db.Pizzas
                     .Include(pizza => pizza.PizzasIngredients)
                     .ThenInclude(pizzasIngredients => pizzasIngredients.Ingredient)
                     .Where(model => model.Name.Contains(name))
                     .ToList();
         }
 
-        protected override AModel Create(AModel model)
+        public Pizzas Save(Pizzas model, int? id = null)
         {
-            Db.Add((Pizzas)model);
+            if (id == null || id < 1)
+                return Create(model);
+            else
+                return Update(model, id);
+        }
+
+        public Pizzas Create(Pizzas model)
+        {
+            _db.Add((Pizzas)model);
 
             return (Pizzas)model;
         }
 
-        protected override AModel Update(AModel model, int? id = null)
+        public Pizzas Update(Pizzas model, int? id = null)
         {
             if (id == null)
             {
                 throw new ArgumentException("Nedded id", nameof(id));
             }
 
-            Pizzas tracked = Db.Pizzas.Find(id);
+            Pizzas tracked = _db.Pizzas.Find(id);
             if (tracked == null)
             {
                 throw new ArgumentException("No Pizza with this id", nameof(id));
             }
 
-            Db.Entry(tracked).CurrentValues.SetValues(model);
+            _db.Entry(tracked).CurrentValues.SetValues(model);
 
             return (Pizzas)model;
         }
@@ -87,7 +99,7 @@ namespace Project0.DataAccess.Repositories
         {
             bool stockAvailable = true;
 
-            List<PizzasIngredients> pizzaIngredients = Db.PizzasIngredients
+            List<PizzasIngredients> pizzaIngredients = _db.PizzasIngredients
                                                         .Include(p => p.Ingredient)
                                                         .Where(p => p.PizzaId == pizza.Id)
                                                         .ToList();
@@ -104,19 +116,24 @@ namespace Project0.DataAccess.Repositories
 
         public void DecreaseStock(Pizzas pizza)
         {
-            List<PizzasIngredients> pizzaIngredients = Db.PizzasIngredients
+            List<PizzasIngredients> pizzaIngredients = _db.PizzasIngredients
                                                         .Include(p => p.Ingredient)
                                                         .Where(p => p.PizzaId == pizza.Id)
                                                         .ToList();
 
             foreach (PizzasIngredients pizzaIngredient in pizzaIngredients)
             {
-                IngredientRepository ingredientRepository = new IngredientRepository(Db);
+                IngredientRepository ingredientRepository = new IngredientRepository(_db);
                 Ingredients ingredient = (Ingredients)ingredientRepository.GetById(pizzaIngredient.IngredientId);
                 ingredient.Stock = ingredient.Stock-1;
-                ingredientRepository.Save(ingredient, ingredient.Id);
+                ingredientRepository.Update(ingredient, ingredient.Id);
                 ingredientRepository.SaveChanges();
             }
+        }
+
+        public void SaveChanges()
+        {
+            _db.SaveChanges();
         }
     }
 }

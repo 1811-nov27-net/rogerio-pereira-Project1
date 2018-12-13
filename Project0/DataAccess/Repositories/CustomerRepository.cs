@@ -1,79 +1,96 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Project0.DataAccess.Repositories.Interfaces;
+using Project1.DataAccess.Repositories.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Project0.DataAccess.Repositories
+namespace Project1.DataAccess.Repositories
 {
-    public class CustomerRepository : ARepository, ICustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="db">Project0Context</param>
-        public CustomerRepository(Project0Context db) : base(db) { }
+        private readonly Project1Context _db;
 
-        public override void Delete(int id)
+        public CustomerRepository(Project1Context db)
         {
-            Customers tracked = Db.Customers.Find(id);
+            _db = db ?? throw new ArgumentNullException(nameof(db));
+
+            // code-first style, make sure the database exists by now.
+            db.Database.EnsureCreated();
+        }
+
+        public void Delete(int id)
+        {
+            Customers tracked = _db.Customers.Find(id);
             if (tracked == null)
             {
                 throw new ArgumentException("No Customer with this id", nameof(id));
             }
-            Db.Remove(tracked);
+            _db.Remove(tracked);
         }
 
-        public override IList GetAll()
+        public IList GetAll()
         {
-            return (List<Customers>)Db.Customers.ToList();
+            return (List<Customers>)_db.Customers.ToList();
         }
 
         public IList GetAllWithAddress()
         {
-            return (List<Customers>)Db.Customers.Include(m => m.Addresses).ToList();
+            return (List<Customers>)_db.Customers.Include(m => m.Addresses).ToList();
         }
 
-        public override AModel GetById(int id)
+        public Customers GetById(int id)
         {
-            return Db.Customers.Find(id);
+            return _db.Customers.Find(id);
         }
 
         public Customers findByIdWithAddress(int id)
         {
-            return Db.Customers.Include(c => c.Addresses).Where(model => model.Id == id).First();
+            return _db.Customers.Include(c => c.Addresses).Where(model => model.Id == id).First();
         }
 
-        public override IList GetByName(string name)
+        public IList GetByName(string name)
         {
-            return (List<Customers>)Db.Customers.Include(m => m.Addresses).Where(model => model.FirstName.Contains(name) || model.LastName.Contains(name)).ToList();
+            return (List<Customers>)_db.Customers.Include(m => m.Addresses).Where(model => model.FirstName.Contains(name) || model.LastName.Contains(name)).ToList();
         }
 
-        protected override AModel Create(AModel model)
+        public Customers Save(Customers model, int? id = null)
         {
-            Db.Add((Customers)model);
+            if (id == null || id < 1)
+                return Create(model);
+            else
+                return Update(model, id);
+        }
+
+        public Customers Create(Customers model)
+        {
+            _db.Add((Customers)model);
 
             return (Customers)model;
         }
 
-        protected override AModel Update(AModel model, int? id = null)
+        public Customers Update(Customers model, int? id = null)
         {
             if (id == null)
             {
                 throw new ArgumentException("Nedded id", nameof(id));
             }
 
-            Customers tracked = Db.Customers.Find(id);
+            Customers tracked = _db.Customers.Find(id);
             if (tracked == null)
             {
                 throw new ArgumentException("No Customer with this id", nameof(id));
             }
 
-            Db.Entry(tracked).CurrentValues.SetValues(model);
+            _db.Entry(tracked).CurrentValues.SetValues(model);
 
             return (Customers)model;
+        }
+
+        public void SaveChanges()
+        {
+            _db.SaveChanges();
         }
     }
 }

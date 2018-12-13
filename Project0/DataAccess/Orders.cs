@@ -1,13 +1,13 @@
-﻿using Project0.DataAccess.Repositories;
+﻿using Project1.DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Project0.DataAccess
+namespace Project1.DataAccess
 {
     [Table("orders", Schema = "pizza")]
-    public partial class Orders : AModel
+    public partial class Orders
     {
         public Orders()
         {

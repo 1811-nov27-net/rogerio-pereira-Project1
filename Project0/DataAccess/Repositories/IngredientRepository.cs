@@ -1,69 +1,86 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Project0.DataAccess.Repositories.Interfaces;
+using Project1.DataAccess.Repositories.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Project0.DataAccess.Repositories
+namespace Project1.DataAccess.Repositories
 {
-    public class IngredientRepository : ARepository, IIngredientRepository
+    public class IngredientRepository : IIngredientRepository
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="db">Project0Context</param>
-        public IngredientRepository(Project0Context db) : base(db) { }
+        private readonly Project1Context _db;
 
-        public override void Delete(int id)
+        public IngredientRepository(Project1Context db)
         {
-            Ingredients tracked = Db.Ingredients.Find(id);
+            _db = db ?? throw new ArgumentNullException(nameof(db));
+
+            // code-first style, make sure the database exists by now.
+            db.Database.EnsureCreated();
+        }
+
+        public void Delete(int id)
+        {
+            Ingredients tracked = _db.Ingredients.Find(id);
             if (tracked == null)
             {
                 throw new ArgumentException("No Ingredient with this id", nameof(id));
             }
-            Db.Remove(tracked);
+            _db.Remove(tracked);
         }
 
-        public override IList GetAll()
+        public IList GetAll()
         {
-            return (List<Ingredients>) Db.Ingredients.ToList();
+            return (List<Ingredients>) _db.Ingredients.ToList();
         }
 
-        public override AModel GetById(int id)
+        public Ingredients GetById(int id)
         {
-            return Db.Ingredients.Find(id);
+            return _db.Ingredients.Find(id);
         }
 
-        public override IList GetByName(string name)
+        public IList GetByName(string name)
         {
-            return (List<Ingredients>)Db.Ingredients.Where(model => model.Name.Contains(name)).ToList();
+            return (List<Ingredients>)_db.Ingredients.Where(model => model.Name.Contains(name)).ToList();
         }
 
-        protected override AModel Create(AModel model)
+        public Ingredients Save(Ingredients model, int? id = null)
         {
-            Db.Add((Ingredients)model);
+            if (id == null || id < 1)
+                return Create(model);
+            else
+                return Update(model, id);
+        }
+
+        public Ingredients Create(Ingredients model)
+        {
+            _db.Add((Ingredients)model);
 
             return (Ingredients)model;
         }
 
-        protected override AModel Update(AModel model, int? id = null)
+        public Ingredients Update(Ingredients model, int? id = null)
         {
             if (id == null)
             {
                 throw new ArgumentException("Nedded id", nameof(id));
             }
 
-            Ingredients tracked = Db.Ingredients.Find(id);
+            Ingredients tracked = _db.Ingredients.Find(id);
             if (tracked == null)
             {
                 throw new ArgumentException("No Ingredient with this id", nameof(id));
             }
 
-            Db.Entry(tracked).CurrentValues.SetValues(model);
+            _db.Entry(tracked).CurrentValues.SetValues(model);
 
             return (Ingredients)model;
+        }
+
+        public void SaveChanges()
+        {
+            _db.SaveChanges();
         }
     }
 }

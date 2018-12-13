@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Project0.DataAccess.Repositories;
-using Project0.DataAccess.Repositories.Interfaces;
+using Project1.DataAccess.Repositories;
+using Project1.DataAccess.Repositories.Interfaces;
+using Project1.DataAccess;
 
 namespace Project1.WebUi
 {
@@ -39,6 +41,9 @@ namespace Project1.WebUi
             services.AddScoped<IIngredientRepository, IngredientRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IPizzaRepository, PizzaRepository>();
+
+
+            services.AddDbContext<Project1Context>(optionsBuilder => optionsBuilder.UseSqlServer(Configuration.GetConnectionString("Project1")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

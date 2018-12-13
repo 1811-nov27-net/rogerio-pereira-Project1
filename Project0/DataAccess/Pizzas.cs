@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Project0.DataAccess
+namespace Project1.DataAccess
 {
     [Table("pizzas", Schema = "pizza")]
-    public partial class Pizzas : AModel
+    public partial class Pizzas
     {
         public Pizzas()
         {
