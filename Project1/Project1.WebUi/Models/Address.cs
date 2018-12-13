@@ -9,8 +9,7 @@ namespace Project1.WebUi.Models
     public class Address
     {
         public int Id { get; set; }
-
-
+        
         [Required]
         public int CustomerId { get; set; }
         
@@ -34,6 +33,10 @@ namespace Project1.WebUi.Models
 
         [Required]
         public int Zipcode { get; set; }
+
+        public virtual Customer Customer { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
 
         public override string ToString()
         {

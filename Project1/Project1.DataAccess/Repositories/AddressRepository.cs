@@ -32,7 +32,7 @@ namespace Project1.DataAccess.Repositories
 
         public IList GetAll()
         {
-            return (List<Addresses>) _db.Addresses.ToList();
+            return (List<Addresses>) _db.Addresses.Include(m => m.Customer).ToList();
         }
 
         public Addresses GetById(int id)
