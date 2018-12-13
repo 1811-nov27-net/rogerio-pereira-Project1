@@ -138,7 +138,6 @@ namespace Project1.WebUi.Controllers
             catch(Exception e)
             {
                 throw e;
-                return View();
             }
         }
     }

@@ -62,6 +62,7 @@
 
                 <div class="modal-footer">
                     <form id="deleteModal-formDelete" method="post" action="">
+                        <input type="hidden" id="deleteModal-formId" value="" />
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-danger btn-ok">Delete</button>
                     </form>
@@ -109,6 +110,7 @@
             $(this).find('#deleteModal-model').html($(e.relatedTarget).data('model'));
             $(this).find('#deleteModal-name').html($(e.relatedTarget).data('name'));
             $(this).find('#deleteModal-formDelete').attr('action', $(e.relatedTarget).data('href'));
+            $(this).find('#deleteModal-formId').val($(e.relatedTarget).data('id'));
         });
     </script>
     @RenderSection("Scripts", required: false)
