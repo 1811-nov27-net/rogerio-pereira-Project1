@@ -21,10 +21,5 @@ namespace Project1.DataAccess
         [ForeignKey("PizzaId")]
         [InverseProperty("PizzasIngredients")]
         public virtual Pizzas Pizza { get; set; }
-
-        public void addIngredient(Ingredients ingredient)
-        {
-            Ingredient = ingredient;
-        }
     }
 }

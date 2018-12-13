@@ -42,20 +42,5 @@ namespace Project1.DataAccess
         public virtual Customers Customer { get; set; }
         [InverseProperty("Address")]
         public virtual ICollection<Orders> Orders { get; set; }
-
-        public override string ToString()
-        {
-            string ret = $"Address ID: {Id} - {Address1}.";
-
-            if(!String.IsNullOrEmpty(Address2))
-                ret = ret + $" {Address2}.";
-
-            ret = ret + $" {City} - {State}. {Zipcode}";
-
-            if (DefaultAddress == true)
-                ret = ret + " *DEFAULT ADDRESS*";
-
-            return ret;
-        }
     }
 }

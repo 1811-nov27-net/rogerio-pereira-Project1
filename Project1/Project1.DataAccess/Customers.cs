@@ -29,20 +29,5 @@ namespace Project1.DataAccess
         public virtual ICollection<Addresses> Addresses { get; set; }
         [InverseProperty("Customer")]
         public virtual ICollection<Orders> Orders { get; set; }
-
-        public override string ToString()
-        {
-            string ret = $"ID: {Id} - {FirstName} {LastName}\n";
-
-            if(Addresses.Count > 0)
-                ret = ret + "Addresses\n";
-
-            foreach (Addresses address in Addresses)
-            {
-                ret = ret + $"{address.ToString()}\n";
-            }
-
-            return ret;
-        }
     }
 }
