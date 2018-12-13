@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Project0.DataAccess.Repositories;
+using Project0.DataAccess.Repositories.Interfaces;
 
 namespace Project1.WebUi
 {
@@ -31,6 +33,12 @@ namespace Project1.WebUi
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //Repositories
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IPizzaRepository, PizzaRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

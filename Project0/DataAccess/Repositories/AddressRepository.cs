@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Project0.DataAccess.Repositories.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Project0.DataAccess.Repositories
 {
-    public class AddressRepository : ARepository
+    public class AddressRepository : ARepository, IAddressRepository
     {
         /// <summary>
         /// Constructor
