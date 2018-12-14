@@ -15,7 +15,7 @@ namespace Project1.WebUi.Models
         public string Name { get; set; }
 
         [Required]
-        [Range(0, double.PositiveInfinity)]
+        [Range(0, int.MaxValue)]
         public int Stock { get; set; }
         
         public virtual List<PizzaIngredient> PizzasIngredients { get; set; }

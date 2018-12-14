@@ -30,14 +30,14 @@ namespace Project1.DataAccess.Repositories
             _db.Remove(tracked);
         }
 
-        public IList GetAll()
+        public IEnumerable GetAll()
         {
-            return (List<Customers>)_db.Customers.ToList();
+            return _db.Customers.ToList();
         }
 
-        public IList GetAllWithAddress()
+        public IEnumerable GetAllWithAddress()
         {
-            return (List<Customers>)_db.Customers.Include(m => m.Addresses).ToList();
+            return _db.Customers.Include(m => m.Addresses).ToList();
         }
 
         public Customers GetById(int id)
@@ -50,9 +50,9 @@ namespace Project1.DataAccess.Repositories
             return _db.Customers.Include(c => c.Addresses).Where(model => model.Id == id).First();
         }
 
-        public IList GetByName(string name)
+        public IEnumerable GetByName(string name)
         {
-            return (List<Customers>)_db.Customers.Include(m => m.Addresses).Where(model => model.FirstName.Contains(name) || model.LastName.Contains(name)).ToList();
+            return _db.Customers.Include(m => m.Addresses).Where(model => model.FirstName.Contains(name) || model.LastName.Contains(name)).ToList();
         }
 
         public Customers Save(Customers model, int? id = null)

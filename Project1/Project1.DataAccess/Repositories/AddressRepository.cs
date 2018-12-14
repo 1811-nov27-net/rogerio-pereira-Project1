@@ -32,7 +32,7 @@ namespace Project1.DataAccess.Repositories
 
         public IList GetAll()
         {
-            return (List<Addresses>) _db.Addresses.Include(m => m.Customer).ToList();
+            return (List<Addresses>) _db.Addresses.Include(m => m.Customer).OrderBy(m => m.CustomerId).ToList();
         }
 
         public Addresses GetById(int id)
@@ -43,13 +43,13 @@ namespace Project1.DataAccess.Repositories
         //Search by the Address 1
         public IList GetByName(string name)
         {
-            return (List<Addresses>)_db.Addresses.Where(model => model.Address1.Contains(name)).ToList();
+            return (List<Addresses>)_db.Addresses.Where(model => model.Address1.Contains(name)).OrderBy(m => m.CustomerId).ToList();
         }
         
         //Search by the Customer Id
         public IList GetByCustomerId(int customerId)
         {
-            return (List<Addresses>)_db.Addresses.Where(model => model.CustomerId == customerId).ToList();
+            return (List<Addresses>)_db.Addresses.Where(model => model.CustomerId == customerId).OrderBy(m => m.CustomerId).ToList();
         }
         
         public Addresses Save(Addresses model, int? id = null)
