@@ -1,0 +1,29 @@
+﻿@model Project1.WebUi.Models.ViewModels.PizzaForm
+
+@{
+    ViewData["Title"] = "Create Pizza";
+}
+
+<h1 class="text-center">Create Pizza</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb p-0 my-3">
+        <li class="breadcrumb-item" aria-current="page">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+        </li>
+        <li class="breadcrumb-item" aria-current="page">
+            <a asp-action="Index">Pizzas</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Create
+        </li>
+    </ol>
+</nav>
+
+<form asp-action="Create">
+    <partial name="_Form" />
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

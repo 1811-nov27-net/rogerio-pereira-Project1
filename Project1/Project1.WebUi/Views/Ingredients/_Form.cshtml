@@ -1,8 +1,10 @@
 ﻿@model Project1.WebUi.Models.Ingredient
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+    <div class="col-md-6">
         <div class="form-group">
             <label asp-for="Name" class="control-label"></label>
             <input asp-for="Name" class="form-control" />

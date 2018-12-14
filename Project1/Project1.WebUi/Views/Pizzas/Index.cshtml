@@ -1,0 +1,65 @@
+﻿@model List<Project1.WebUi.Models.Pizza>
+
+@{
+    ViewData["Title"] = "Pizzas";
+}
+
+<div class='text-center'>
+    <h1>Pizzas</h1>
+
+    <p>
+        <a class="btn btn-success my-3" asp-area="" asp-controller="Pizzas" asp-action="Create">
+            <i class="fas fa-plus mr-1"></i> Create New
+        </a>
+    </p>
+</div>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb p-0 my-4">
+        <li class="breadcrumb-item" aria-current="page">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+        </li>
+        <li class="breadcrumb-item" aria-current="page">
+            Pizzas
+        </li>
+    </ol>
+</nav>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th width="150px">Actions</th>
+            <th width="100px">Id</th>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a class="btn btn-info btn-sm" asp-area="" asp-controller="Pizzas" asp-action="Edit" asp-route-id="@item.Id">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <a class="btn btn-info btn-sm" asp-area="" asp-controller="Pizzas" asp-action="Details" asp-route-id="@item.Id">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <a href="#" class="btn btn-danger btn-sm" data-href="/Pizzas/Delete/@item.Id" data-toggle="modal" data-target="#confirm-delete"
+                       data-id="@item.Id" data-model="Igredient" data-name="@item.Name">
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    $ @Html.DisplayFor(modelItem => item.Price)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

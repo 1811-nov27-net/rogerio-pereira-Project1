@@ -1,0 +1,38 @@
+﻿@model Project1.WebUi.Models.ViewModels.PizzaForm
+
+<div class="row">
+    <div class="col-md-12">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="Name" class="control-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="Price" class="control-label">Price</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-12 text-center my-3">
+        <h2>Ingredients</h2>
+    </div>
+    @foreach (Ingredient ingredient in Model.Ingredients)
+    {
+        <div class="col-md-3 col-sm-6">
+            <div class="form-check">
+                <input type="checkbox" name="ingredientsId" id="@ingredient.Id" value="@ingredient.Id" class="form-check-input" />
+                <label for="@ingredient.Id" class="form-check-label">@ingredient.Name</label>
+            </div>
+        </div>
+    }
+    <div class="col-md-12 text-center mt-3">
+        <button type="submit" class="btn btn-success">
+            <i class="far fa-save mr-1"></i> Save
+        </button>
+    </div>
+</div>

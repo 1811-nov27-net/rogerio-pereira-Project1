@@ -84,13 +84,18 @@ namespace Project1.DataAccess.Repositories
                 throw new ArgumentException("Nedded id", nameof(id));
             }
 
-            Pizzas tracked = _db.Pizzas.Find(id);
+            Pizzas tracked = _db.Pizzas
+                    .Include(pizza => pizza.PizzasIngredients)
+                    .ThenInclude(pizzasIngredients => pizzasIngredients.Ingredient)
+                    .Where(pizza => pizza.Id == id)
+                    .First();
             if (tracked == null)
             {
                 throw new ArgumentException("No Pizza with this id", nameof(id));
             }
 
             _db.Entry(tracked).CurrentValues.SetValues(model);
+            tracked.PizzasIngredients = model.PizzasIngredients;
 
             return (Pizzas)model;
         }

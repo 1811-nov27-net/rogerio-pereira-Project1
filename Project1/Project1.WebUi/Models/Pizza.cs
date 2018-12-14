@@ -20,6 +20,11 @@ namespace Project1.WebUi.Models
 
         public virtual ICollection<PizzaIngredient> PizzasIngredients { get; set; }
 
+        public Pizza()
+        {
+            PizzasIngredients = new List<PizzaIngredient>();
+        }
+
         public override string ToString()
         {
             string ret = $"ID: {Id} - {Name} {Convert.ToDecimal(string.Format("{0:0,00.00}", Price))}";
@@ -39,6 +44,9 @@ namespace Project1.WebUi.Models
         {
             PizzaIngredient pi = new PizzaIngredient();
             pi.addIngredient(ingredient);
+
+            if (Id != null && Id > 0)
+                pi.PizzaId = Id;
 
             PizzasIngredients.Add(pi);
         }

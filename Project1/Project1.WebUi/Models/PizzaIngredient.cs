@@ -20,6 +20,7 @@ namespace Project1.WebUi.Models
         public void addIngredient(Ingredient ingredient)
         {
             Ingredient = ingredient;
+            IngredientId = ingredient.Id;
         }
     }
 }
