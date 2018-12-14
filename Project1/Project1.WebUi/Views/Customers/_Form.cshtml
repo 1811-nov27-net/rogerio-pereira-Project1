@@ -1,0 +1,26 @@
+﻿@model Project1.WebUi.Models.Customer
+
+<div class="row">
+    <div class="col-md-12">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-label"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="LastName" class="control-label"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-12 text-center">
+        <button type="submit" class="btn btn-success">
+            <i class="far fa-save mr-1"></i> Save
+        </button>
+    </div>
+</div>

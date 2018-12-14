@@ -21,6 +21,11 @@ namespace Project1.WebUi.Models
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
 
+        public Customer()
+        {
+            Addresses = new List<Address>();
+        }
+
         public override string ToString()
         {
             string ret = $"ID: {Id} - {FirstName} {LastName}\n";
