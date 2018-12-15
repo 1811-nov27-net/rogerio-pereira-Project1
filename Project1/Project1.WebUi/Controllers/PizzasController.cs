@@ -231,6 +231,8 @@ namespace Project1.WebUi.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    List<Pizza> pizzas = new List<Pizza>();
+
                     if (search.searchText == "" || search.searchText == null)
                     {
                         return RedirectToAction(nameof(Index));
@@ -240,16 +242,14 @@ namespace Project1.WebUi.Controllers
                         int id = int.Parse(search.searchText);
 
                         Pizza pizza = Mapper.Map<Pizzas, Pizza>(Repository.GetById(id));
-                        List<Pizza> pizzas = new List<Pizza>();
                         pizzas.Add(pizza);
-
-                        return View("Index", pizzas);
                     }
                     else if (search.searchBy == "Name")
                     {
-                        IEnumerable<Pizza> pizzas = Mapper.Map<IEnumerable<Pizzas>, IEnumerable<Pizza>>((IEnumerable<Pizzas>)Repository.GetByName(search.searchText));
-                        return View("Index", pizzas);
+                        pizzas = Mapper.Map<List<Pizzas>, List<Pizza>>((List<Pizzas>)Repository.GetByName(search.searchText));
                     }
+
+                    return View("Index", pizzas);
                 }
             }
             catch (Exception e)

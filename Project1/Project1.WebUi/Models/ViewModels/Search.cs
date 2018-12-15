@@ -9,5 +9,6 @@ namespace Project1.WebUi.Models.ViewModels
     {
         public string searchBy { get; set; }
         public string searchText { get; set; }
+        public int order { get; set; }
     }
 }

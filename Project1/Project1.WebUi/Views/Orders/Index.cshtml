@@ -12,6 +12,47 @@
             <i class="fas fa-plus mr-1"></i> Create New
         </a>
     </p>
+
+    <form asp-action="Search">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2 class="mb-3">Search</h2>
+            </div>
+            <div class="col-md-3 form-group">
+                <select name="searchBy" id="searchBy" class="form-control">
+                    <option value="Name">Name</option>
+                    <option value="ID">ID</option>
+                </select>
+            </div>
+            <div class="col-md-9">
+                <input type="text" name="searchText" id="serchText" class="form-control" placeholder="Search" />
+            </div>
+            <div class="col-md-12 text-center">
+                <h3>Sort</h3>
+            </div>
+            <div class="col-md-3">
+                <input type="radio" name="order" id="order_earliest" value="1" class="form-check-input" checked/>
+                <label for="order_earliest" class="form-check-label">Earliest First</label>
+            </div>
+            <div class="col-md-3">
+                <input type="radio" name="order" id="order_latest" value="2" class="form-check-input" />
+                <label for="order_latest" class="form-check-label">Latest First</label>
+            </div>
+            <div class="col-md-3">
+                <input type="radio" name="order" id="order_cheapest" value="3" class="form-check-input" />
+                <label for="order_cheapest" class="form-check-label">Cheapest First</label>
+            </div>
+            <div class="col-md-3">
+                <input type="radio" name="order" id="order_expensive" value="4" class="form-check-input" />
+                <label for="order_expensive" class="form-check-label">Most Expensive First</label>
+            </div>
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <nav aria-label="breadcrumb">

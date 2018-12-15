@@ -238,5 +238,65 @@ namespace Project1.WebUi.Controllers
                 return false;
             }
         }
+
+
+
+        // POST: Order/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(Search search)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    List<Order> orders = new List<Order>();
+
+                    if (search.searchText == "" || search.searchText == null)
+                    {
+                        orders = Mapper.Map<List<Orders>, List<Order>>((List<Orders>)Repository.GetAll());
+                    }
+                    else
+                    {
+                        if (search.searchBy == "ID")
+                        {
+                            int id = int.Parse(search.searchText);
+
+                            Order order = Mapper.Map<Orders, Order>(Repository.GetById(id));
+                            orders = new List<Order>();
+                            orders.Add(order);
+                        }
+                        else if (search.searchBy == "Name")
+                        {
+                            orders = Mapper.Map<List<Orders>, List<Order>>((List<Orders>)Repository.GetByName(search.searchText));
+                        }
+                    }
+
+                    switch (search.order)
+                    {
+                        case 1:
+                            orders = orders.OrderBy(m => m.Date).ToList();
+                            break;
+                        case 2:
+                            orders = orders.OrderByDescending(m => m.Date).ToList();
+                            break;
+                        case 3:
+                            orders = orders.OrderBy(m => m.Value).ToList();
+                            break;
+                        case 4:
+                            orders = orders.OrderByDescending(m => m.Value).ToList();
+                            break;
+                    }
+
+                    return View("Index", orders);
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

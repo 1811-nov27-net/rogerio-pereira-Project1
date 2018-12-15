@@ -156,6 +156,8 @@ namespace Project1.WebUi.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    List<Ingredient> ingredients = new List<Ingredient>();
+
                     if (search.searchText == "" || search.searchText == null)
                     {
                         return RedirectToAction(nameof(Index));
@@ -165,16 +167,14 @@ namespace Project1.WebUi.Controllers
                         int id = int.Parse(search.searchText);
 
                         Ingredient ingredient = Mapper.Map<Ingredients, Ingredient>(Repository.GetById(id));
-                        List<Ingredient> ingredients = new List<Ingredient>();
                         ingredients.Add(ingredient);
-
-                        return View("Index", ingredients);
                     }
                     else if (search.searchBy == "Name")
                     {
-                        IEnumerable<Ingredient> ingredients = Mapper.Map<IEnumerable<Ingredients>, IEnumerable<Ingredient>>((IEnumerable<Ingredients>)Repository.GetByName(search.searchText));
-                        return View("Index", ingredients);
+                        ingredients = Mapper.Map<List<Ingredients>, List<Ingredient>>((List<Ingredients>)Repository.GetByName(search.searchText));
                     }
+
+                    return View("Index", ingredients);
                 }
             }
             catch (Exception e)

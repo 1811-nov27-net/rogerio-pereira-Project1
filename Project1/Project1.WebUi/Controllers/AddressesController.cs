@@ -198,6 +198,8 @@ namespace Project1.WebUi.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    List<Address> addresses = new List<Address>();
+
                     if (search.searchText == "" || search.searchText == null)
                     {
                         return RedirectToAction(nameof(Index));
@@ -207,16 +209,14 @@ namespace Project1.WebUi.Controllers
                         int id = int.Parse(search.searchText);
 
                         Address address = Mapper.Map<Addresses, Address>(Repository.GetById(id));
-                        List<Address> addresses = new List<Address>();
                         addresses.Add(address);
-
-                        return View("Index", addresses);
                     }
                     else if (search.searchBy == "Name")
                     {
-                        IEnumerable<Address> customers = Mapper.Map<IEnumerable<Addresses>, IEnumerable<Address>>((IEnumerable<Addresses>)Repository.GetByName(search.searchText));
-                        return View("Index", customers);
+                        addresses = Mapper.Map<List<Addresses>, List<Address>>((List<Addresses>)Repository.GetByName(search.searchText));
                     }
+
+                    return View("Index", addresses);
                 }
             }
             catch (Exception e)
