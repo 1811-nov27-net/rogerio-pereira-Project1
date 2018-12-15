@@ -17,6 +17,18 @@ $('.pizzaQuantity').change(function () {
 
     checkPizzasCount();
     CheckValue();
+
+    if ($(this).val() > 0) {
+        pizzaId = $(this).data('id');
+        quantity = $(this).val();
+        
+        $.get("/Pizzas/CheckPizzaStock/" + pizzaId + "/" + quantity, function (data) {
+            if(data == false)
+                $('#ErrorPizzaStock_' + pizzaId).html("Can't add this pizza quantity, Pizza's Ingredient stock is low");
+            else
+                $('#ErrorPizzaStock_' + pizzaId).html("");
+        });
+    }
 })
 
 $('.pizzaQuantity').blur(function () {

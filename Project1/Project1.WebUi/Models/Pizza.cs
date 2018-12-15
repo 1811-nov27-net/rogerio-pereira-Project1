@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project1.WebUi.Controllers.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -49,6 +50,21 @@ namespace Project1.WebUi.Models
                 pi.PizzaId = Id;
 
             PizzasIngredients.Add(pi);
+        }
+
+        public bool checkStock(int quantity)
+        {
+            IEnumerable<PizzaIngredient> pizzaIngredients = PizzasIngredients;
+
+            foreach (PizzaIngredient pizzaIngredient in pizzaIngredients)
+            {
+                Ingredient ingredient = pizzaIngredient.Ingredient;
+
+                if (ingredient.Stock < quantity)
+                    throw new MinimumStockException("Can't add this pizza quantity, Pizza's Ingredient stock is low");
+            }
+
+            return true;
         }
     }
 }

@@ -93,6 +93,11 @@ namespace Project1.WebUi
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "pizzas.CheckPizzaStock",
+                    template: "Pizzas/CheckPizzaStock/{pizzaId}/{quantity}",
+                    defaults: new { controller = "Pizzas", action = "CheckPizzaStock" }
+                );
                 //SetDefault Address
                 routes.MapRoute(
                     name: "address.SetDefaultAddress",

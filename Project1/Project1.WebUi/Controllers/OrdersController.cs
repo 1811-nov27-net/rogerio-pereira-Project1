@@ -81,7 +81,15 @@ namespace Project1.WebUi.Controllers
 
                     for(var j=0; j<quantity; j++)
                     {
-                        order.AddPizza(pizzasList[i]);
+                        Pizza pizza = pizzasList[i];
+
+                        //Check Stock 
+                        //Need this assign because the pizzaslist doesn't get all ingredients, (it's used in other places, and don't need the ingredients)
+                        Pizza check = Mapper.Map<Pizzas, Pizza>(PizzaRepository.GetById(pizza.Id));
+                        check.checkStock(1);
+
+                        order.AddPizza(pizza);
+                        PizzaRepository.DecreaseStock(Mapper.Map<Pizza, Pizzas>(pizza));
                     }
                 }
 
@@ -89,6 +97,11 @@ namespace Project1.WebUi.Controllers
                 Repository.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
+            }
+            catch (MinimumStockException ex)
+            {
+                ModelState.AddModelError("ErrorPizzas", ex.Message);
+                return View();
             }
             catch (SamePlaceException ex)
             {

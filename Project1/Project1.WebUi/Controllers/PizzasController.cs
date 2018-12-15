@@ -9,6 +9,7 @@ using Project1.WebUi.Models;
 using Project1.DataAccess;
 using Project1.DataAccess.Repositories.Interfaces;
 using Project1.WebUi.Models.ViewModels;
+using Project1.WebUi.Controllers.Exceptions;
 
 namespace Project1.WebUi.Controllers
 {
@@ -26,7 +27,7 @@ namespace Project1.WebUi.Controllers
         // GET: Pizza
         public ActionResult Index()
         {
-            return View(Mapper.Map< IEnumerable<Pizzas>, IEnumerable<Pizza>>((IEnumerable<Pizzas>)Repository.GetAll()));
+            return View(Mapper.Map<IEnumerable<Pizzas>, IEnumerable<Pizza>>((IEnumerable<Pizzas>)Repository.GetAll()));
             //return View(Repository.GetAll());
         }
 
@@ -60,29 +61,29 @@ namespace Project1.WebUi.Controllers
             {
                 //if (ModelState.IsValid)
                 //{
-                    Pizza pizza = new Pizza()
-                    {
-                        //Id = int.Parse(collection["Id"]),
-                        Name = collection["Name"],
-                        Price = decimal.Parse(collection["Price"])
-                    };
-                    
-                    //Convert all ingredientsId to int
-                    List<int> ingredientsIdList = new List<int>();
-                    foreach (string ingredientsIdString in collection["ingredientsId"])
-                    {
-                        ingredientsIdList.Add(int.Parse(ingredientsIdString));
-                    }
+                Pizza pizza = new Pizza()
+                {
+                    //Id = int.Parse(collection["Id"]),
+                    Name = collection["Name"],
+                    Price = decimal.Parse(collection["Price"])
+                };
 
-                    //Add all ingredients to pizza
-                    foreach(int ingredientId in ingredientsIdList)
-                    {
-                        Ingredient ingredient = Mapper.Map<Ingredients, Ingredient>(IngredientsRepository.GetById(ingredientId));
-                        pizza.addIngredients(ingredient);
-                    }
+                //Convert all ingredientsId to int
+                List<int> ingredientsIdList = new List<int>();
+                foreach (string ingredientsIdString in collection["ingredientsId"])
+                {
+                    ingredientsIdList.Add(int.Parse(ingredientsIdString));
+                }
 
-                    Repository.Save(Mapper.Map<Pizza, Pizzas>(pizza));
-                    Repository.SaveChanges();
+                //Add all ingredients to pizza
+                foreach (int ingredientId in ingredientsIdList)
+                {
+                    Ingredient ingredient = Mapper.Map<Ingredients, Ingredient>(IngredientsRepository.GetById(ingredientId));
+                    pizza.addIngredients(ingredient);
+                }
+
+                Repository.Save(Mapper.Map<Pizza, Pizzas>(pizza));
+                Repository.SaveChanges();
                 //}
                 //else
                 //{
@@ -124,40 +125,40 @@ namespace Project1.WebUi.Controllers
         {
             try
             {
-                
+
                 //if (ModelState.IsValid)
                 //{
-                    Pizza pizza = Mapper.Map<Pizzas, Pizza>(Repository.GetById(id));
+                Pizza pizza = Mapper.Map<Pizzas, Pizza>(Repository.GetById(id));
 
-                    if (id != pizza.Id)
-                    {
-                        ModelState.AddModelError("id", "should match the route id");
-                        return View();
-                    }
+                if (id != pizza.Id)
+                {
+                    ModelState.AddModelError("id", "should match the route id");
+                    return View();
+                }
 
-                    pizza.Name = collection["Name"];
-                    pizza.Price = decimal.Parse(collection["Price"]);
-                    pizza.PizzasIngredients = new List<PizzaIngredient>();
+                pizza.Name = collection["Name"];
+                pizza.Price = decimal.Parse(collection["Price"]);
+                pizza.PizzasIngredients = new List<PizzaIngredient>();
 
-                    //Convert all ingredientsId to int
-                    List<int> ingredientsIdList = new List<int>();
-                    foreach (string ingredientsIdString in collection["ingredientsId"])
-                    {
-                        ingredientsIdList.Add(int.Parse(ingredientsIdString));
-                    }
+                //Convert all ingredientsId to int
+                List<int> ingredientsIdList = new List<int>();
+                foreach (string ingredientsIdString in collection["ingredientsId"])
+                {
+                    ingredientsIdList.Add(int.Parse(ingredientsIdString));
+                }
 
-                    //Add all ingredients to pizza
-                    foreach (int ingredientId in ingredientsIdList)
-                    {
-                        Ingredient ingredient = Mapper.Map<Ingredients, Ingredient>(IngredientsRepository.GetById(ingredientId));
-                        pizza.addIngredients(ingredient);
-                    }
+                //Add all ingredients to pizza
+                foreach (int ingredientId in ingredientsIdList)
+                {
+                    Ingredient ingredient = Mapper.Map<Ingredients, Ingredient>(IngredientsRepository.GetById(ingredientId));
+                    pizza.addIngredients(ingredient);
+                }
 
-                    Pizzas pizzaDataAccess = Mapper.Map<Pizza, Pizzas>(pizza);
-                    pizzaDataAccess.PizzasIngredients = Mapper.Map<ICollection<PizzaIngredient>, ICollection<PizzasIngredients>>(pizza.PizzasIngredients);
-                    
-                    Repository.Save(pizzaDataAccess, id);
-                    Repository.SaveChanges();
+                Pizzas pizzaDataAccess = Mapper.Map<Pizza, Pizzas>(pizza);
+                pizzaDataAccess.PizzasIngredients = Mapper.Map<ICollection<PizzaIngredient>, ICollection<PizzasIngredients>>(pizza.PizzasIngredients);
+
+                Repository.Save(pizzaDataAccess, id);
+                Repository.SaveChanges();
                 //}
                 //else
                 //{
@@ -196,10 +197,29 @@ namespace Project1.WebUi.Controllers
                 Repository.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
+        }
+
+        // GET: Pizzas/CheckPizzaStock/5/2
+        public bool CheckPizzaStock(int pizzaId, int quantity)
+        { 
+            try
+            {
+                var pizza = Mapper.Map<Pizzas, Pizza>(Repository.GetById(pizzaId));
+                if (pizza != null)
+                {
+                    return pizza.checkStock(quantity);
+                }
+            }
+            catch(MinimumStockException ex)
+            {
+                return false;
+            }
+
+            return false;
         }
     }
 }
