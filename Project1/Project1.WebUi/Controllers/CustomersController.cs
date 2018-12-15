@@ -154,5 +154,43 @@ namespace Project1.WebUi.Controllers
                 throw e;
             }
         }
+        
+        // POST: Customer/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(Search search)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (search.searchText == "" || search.searchText == null)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    if (search.searchBy == "ID")
+                    {
+                        int id = int.Parse(search.searchText);
+
+                        Customer customer = Mapper.Map<Customers, Customer>(Repository.GetById(id));
+                        List<Customer> customers = new List<Customer>();
+                        customers.Add(customer);
+
+                        return View("Index", customers);
+                    }
+                    else if (search.searchBy == "Name")
+                    {
+                        IEnumerable<Customer> customers = Mapper.Map<IEnumerable<Customers>, IEnumerable<Customer>>((IEnumerable<Customers>)Repository.GetByName(search.searchText));
+                        return View("Index", customers);
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
