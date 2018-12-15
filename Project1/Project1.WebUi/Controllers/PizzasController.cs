@@ -221,5 +221,43 @@ namespace Project1.WebUi.Controllers
 
             return false;
         }
+
+        // POST: Pizza/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(Search search)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (search.searchText == "" || search.searchText == null)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    if (search.searchBy == "ID")
+                    {
+                        int id = int.Parse(search.searchText);
+
+                        Pizza pizza = Mapper.Map<Pizzas, Pizza>(Repository.GetById(id));
+                        List<Pizza> pizzas = new List<Pizza>();
+                        pizzas.Add(pizza);
+
+                        return View("Index", pizzas);
+                    }
+                    else if (search.searchBy == "Name")
+                    {
+                        IEnumerable<Pizza> pizzas = Mapper.Map<IEnumerable<Pizzas>, IEnumerable<Pizza>>((IEnumerable<Pizzas>)Repository.GetByName(search.searchText));
+                        return View("Index", pizzas);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

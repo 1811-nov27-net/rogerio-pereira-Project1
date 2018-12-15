@@ -169,7 +169,7 @@ namespace Project1.WebUi.Controllers
             }
         }
 
-        // GET: Customer/GetAddress/5
+        // GET: Address/GetAddress/5
         public string GetAddressByCustomerId(int id)
         {
             string ret = "";
@@ -187,6 +187,44 @@ namespace Project1.WebUi.Controllers
             }
 
             return ret;
+        }
+
+        // POST: Address/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(Search search)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (search.searchText == "" || search.searchText == null)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    if (search.searchBy == "ID")
+                    {
+                        int id = int.Parse(search.searchText);
+
+                        Address address = Mapper.Map<Addresses, Address>(Repository.GetById(id));
+                        List<Address> addresses = new List<Address>();
+                        addresses.Add(address);
+
+                        return View("Index", addresses);
+                    }
+                    else if (search.searchBy == "Name")
+                    {
+                        IEnumerable<Address> customers = Mapper.Map<IEnumerable<Addresses>, IEnumerable<Address>>((IEnumerable<Addresses>)Repository.GetByName(search.searchText));
+                        return View("Index", customers);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

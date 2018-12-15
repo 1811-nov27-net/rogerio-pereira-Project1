@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Project1.WebUi.Models;
 using Project1.DataAccess;
 using Project1.DataAccess.Repositories.Interfaces;
+using Project1.WebUi.Models.ViewModels;
 
 namespace Project1.WebUi.Controllers
 {
@@ -144,6 +145,44 @@ namespace Project1.WebUi.Controllers
             {
                 throw e;
             }
+        }
+
+        // POST: Ingredient/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(Search search)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (search.searchText == "" || search.searchText == null)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    if (search.searchBy == "ID")
+                    {
+                        int id = int.Parse(search.searchText);
+
+                        Ingredient ingredient = Mapper.Map<Ingredients, Ingredient>(Repository.GetById(id));
+                        List<Ingredient> ingredients = new List<Ingredient>();
+                        ingredients.Add(ingredient);
+
+                        return View("Index", ingredients);
+                    }
+                    else if (search.searchBy == "Name")
+                    {
+                        IEnumerable<Ingredient> ingredients = Mapper.Map<IEnumerable<Ingredients>, IEnumerable<Ingredient>>((IEnumerable<Ingredients>)Repository.GetByName(search.searchText));
+                        return View("Index", ingredients);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
