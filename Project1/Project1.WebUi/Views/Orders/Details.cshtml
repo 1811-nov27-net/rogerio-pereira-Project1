@@ -34,7 +34,7 @@
             Customer
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayNameFor(model => model.Customer.FirstName) @Html.DisplayNameFor(model => model.Customer.LastName)
+            @Model.Customer.FirstName @Model.Customer.LastName
         </dd>
         <dt class="col-sm-2">
             Address
@@ -68,7 +68,7 @@
             @foreach (OrderPizza op in Model.OrderPizzas)
             {
                 Pizza pizza = op.Pizza;
-                @pizza.Name;
+                @pizza.Name<br/>
             }
         </dd>
     </dl>

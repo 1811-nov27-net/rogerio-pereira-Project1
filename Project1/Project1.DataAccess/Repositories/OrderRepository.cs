@@ -115,13 +115,15 @@ namespace Project1.DataAccess.Repositories
             }
 
             _db.Entry(tracked).CurrentValues.SetValues(model);
+            tracked.OrderPizzas = model.OrderPizzas;
 
             return (Orders)model;
         }
 
         public DateTime getLastOrderDate(int addressId)
         {
-            return _db.Orders.Where(m => m.AddressId == addressId).DefaultIfEmpty().Max(d => d.Date);
+            DateTime dt = _db.Orders.Where(m => m.AddressId == addressId).DefaultIfEmpty().Max(d => d.Date);
+            return dt;
         }
 
         public List<Pizzas> getSuggestedPizzas(int customerId)

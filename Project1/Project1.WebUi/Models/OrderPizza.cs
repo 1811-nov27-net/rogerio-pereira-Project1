@@ -16,5 +16,11 @@ namespace Project1.WebUi.Models
         public virtual Order Order { get; set; }
 
         public virtual Pizza Pizza { get; set; }
+
+        public void addPizza(Pizza pizza)
+        {
+            Pizza = pizza;
+            PizzaId = pizza.Id;
+        }
     }
 }

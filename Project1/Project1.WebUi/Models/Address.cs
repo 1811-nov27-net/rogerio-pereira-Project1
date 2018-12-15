@@ -32,6 +32,7 @@ namespace Project1.WebUi.Models
         public string State { get; set; }
 
         [Required]
+        [Range(10000, 99999)]
         public int Zipcode { get; set; }
 
         public virtual Customer Customer { get; set; }
@@ -40,15 +41,12 @@ namespace Project1.WebUi.Models
 
         public override string ToString()
         {
-            string ret = $"Address ID: {Id} - {Address1}.";
+            string ret = $"{Address1}.";
 
             if (!String.IsNullOrEmpty(Address2))
                 ret = ret + $" {Address2}.";
 
             ret = ret + $" {City} - {State}. {Zipcode}";
-
-            if (DefaultAddress == true)
-                ret = ret + " *DEFAULT ADDRESS*";
 
             return ret;
         }

@@ -1,4 +1,4 @@
-﻿@model Project1.WebUi.Models.Order
+﻿@model Project1.WebUi.Models.ViewModels.OrderForm
 
 @{
     ViewData["Title"] = "Create Order";
@@ -26,4 +26,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/order.js" asp-append-version="true"></script>
 }

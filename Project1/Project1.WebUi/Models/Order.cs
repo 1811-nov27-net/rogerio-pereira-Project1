@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Project1.WebUi.Controllers.Exceptions;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,20 +10,21 @@ namespace Project1.WebUi.Models
     public class Order
     {
         public int Id { get; set; }
-
+        [Required]
         public int CustomerId { get; set; }
-
+        [Required]
         public int AddressId { get; set; }
-
+        [Required]
+        [Range(1, 500)]
         public decimal Value { get; set; }
-
+        [Required]
         public DateTime Date { get; set; }
-        
+
         public virtual Address Address { get; set; }
 
         public virtual Customer Customer { get; set; }
 
-        public virtual ICollection<OrderPizza> OrderPizzas { get; set; }
+        public virtual IList<OrderPizza> OrderPizzas { get; set; }
 
         public Order()
         {
@@ -30,7 +33,7 @@ namespace Project1.WebUi.Models
 
         public override string ToString()
         {
-            string ret = $"ID: {Id} - {Customer.FirstName} {Customer.LastName}";
+            /*string ret = $"ID: {Id} - {Customer.FirstName} {Customer.LastName}";
             ret = ret + $"\nDelivered at: { Address.ToString() }";
             ret = ret + $"\nDate: { Date }";
             ret = ret + $"\nValue: $ {Convert.ToDecimal(string.Format("{0:0,00.00}", Value))}";
@@ -46,7 +49,8 @@ namespace Project1.WebUi.Models
 
             ret = ret + "\n";
 
-            return ret;
+            return ret;*/
+            return "";
         }
         
         public bool AddPizza(Pizza pizza)
@@ -55,18 +59,23 @@ namespace Project1.WebUi.Models
 
             if (OrderPizzas.Count >= 12)
             {
-                Console.WriteLine("Maximum quantity of pizzas allowed (12 pizzas)");
-                return false;
+                throw new MaximumQuantityException("Maximum quantity of pizzas allowed (12 pizzas).");
             }
             else if (newValue > 500)
             {
-                Console.WriteLine("Maximum Order Amount Allowed ($ 500)");
-                return false;
+                throw new MaximumAmountException("Maximum Order Amount Allowed ($ 500).");
             }
             else
             {
-                OrderPizzas.Add(new OrderPizza() { PizzaId = pizza.Id });
+                OrderPizza op = new OrderPizza();
+                op.addPizza(pizza);
+
+                if (Id != null && Id > 0)
+                    op.OrderId = Id;
+
+                OrderPizzas.Add(op);
                 Value += pizza.Price;
+
                 return true;
             }
         }
@@ -76,7 +85,9 @@ namespace Project1.WebUi.Models
             //If Less then 2 hours can't place order to the address
             double totalHours = (DateTime.Now - date).TotalHours;
             if (totalHours < 2)
-                return false;
+            {
+                throw new SamePlaceException("Can't order from the same place Within 2 hours.");
+            }
 
             return true;
         }

@@ -168,5 +168,25 @@ namespace Project1.WebUi.Controllers
                 throw e;
             }
         }
+
+        // GET: Customer/GetAddress/5
+        public string GetAddressByCustomerId(int id)
+        {
+            string ret = "";
+
+            IEnumerable<Address> addresses = Mapper.Map<IEnumerable<Addresses>, IEnumerable<Address>>((IEnumerable<Addresses>)Repository.GetByCustomerId(id));
+
+            foreach(Address address in addresses)
+            {
+                string selected = "";
+
+                if(address.DefaultAddress == true)
+                    selected = "selected";
+
+                ret += $"<option value='{address.Id}' {selected}>{address.ToString()}</option>";
+            }
+
+            return ret;
+        }
     }
 }
