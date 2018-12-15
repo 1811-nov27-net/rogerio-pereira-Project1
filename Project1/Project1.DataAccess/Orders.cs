@@ -11,7 +11,7 @@ namespace Project1.DataAccess
     {
         public Orders()
         {
-            OrderPizzas = new HashSet<OrderPizzas>();
+            OrderPizzas = new List<OrderPizzas>();
         }
 
         [Column("id")]

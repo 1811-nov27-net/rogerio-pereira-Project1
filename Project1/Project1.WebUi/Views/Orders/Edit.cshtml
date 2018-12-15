@@ -1,0 +1,29 @@
+﻿@model Project1.WebUi.Models.Order
+
+@{
+    ViewData["Title"] = "Edit Order";
+}
+
+<h1 class="text-center">Edit Order</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb p-0 my-3">
+        <li class="breadcrumb-item" aria-current="page">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+        </li>
+        <li class="breadcrumb-item" aria-current="page">
+            <a asp-action="Index">Orders</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Create
+        </li>
+    </ol>
+</nav>
+
+<form asp-action="Edit">
+    <partial name="_Form" />
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

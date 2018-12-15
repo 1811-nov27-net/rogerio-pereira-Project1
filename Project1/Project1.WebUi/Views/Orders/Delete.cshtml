@@ -1,0 +1,82 @@
+﻿@model Project1.WebUi.Models.Order
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1 class="text-center">
+    Delete Order ID: @Html.DisplayFor(model => model.Id) - @Html.DisplayFor(model => model.Customer.FirstName) @Html.DisplayFor(model => model.Customer.LastName)
+</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb p-0 my-3">
+        <li class="breadcrumb-item" aria-current="page">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+        </li>
+        <li class="breadcrumb-item" aria-current="page">
+            <a asp-action="Index">Orders</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Delete Order @Html.DisplayFor(model => model.Id)
+        </li>
+    </ol>
+</nav>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayNameFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            Customer
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayNameFor(model => model.Customer.FirstName) @Html.DisplayNameFor(model => model.Customer.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            Address
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.Address1)
+
+            @if (Model.Address.Address2 != null && Model.Address.Address2 != "")
+            {
+                <text>. @Html.DisplayFor(modelItem => Model.Address.Address2)</text>
+            }
+
+            . @Html.DisplayFor(model => model.Address.City) - @Html.DisplayFor(model => model.Address.State). @Html.DisplayFor(model => model.Address.Zipcode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Value)
+        </dt>
+        <dd class="col-sm-10">
+            $ @Html.DisplayFor(model => model.Value)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class="col-sm-2">
+            Pizzas
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (OrderPizza op in Model.OrderPizzas)
+            {
+                Pizza pizza = op.Pizza;
+                @pizza.Name;
+            }
+        </dd>
+    </dl>
+
+
+    <div class="text-center">
+        <form asp-action="Delete">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </form>
+    </div>
+</div>

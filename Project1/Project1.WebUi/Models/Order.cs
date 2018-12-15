@@ -23,6 +23,11 @@ namespace Project1.WebUi.Models
 
         public virtual ICollection<OrderPizza> OrderPizzas { get; set; }
 
+        public Order()
+        {
+            OrderPizzas = new List<OrderPizza>();
+        }
+
         public override string ToString()
         {
             string ret = $"ID: {Id} - {Customer.FirstName} {Customer.LastName}";
