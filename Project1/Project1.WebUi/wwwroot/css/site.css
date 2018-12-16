@@ -46,10 +46,69 @@ body {
 }
 
 
-/*--------------------------------------------------*/
+/*---------------------MY CSS-----------------*/
 main{
 }
 
+.customers {
+    background-color: #92a9ef;
+}
+.customers .card-header,
+a.customers:hover
+{
+    background-color: #6e87d3;
+}
+
+.addresses {
+    background-color: #97ea8c;
+}
+.addresses .card-header,
+a.addresses:hover {
+    background-color: #75ce67;
+}
+
+.pizzas {
+    background-color: #f28e8e;
+}
+.pizzas .card-header,
+a.pizzas:hover {
+    background-color: #d66868;
+}
+
+.ingredients {
+    background-color: #efbe8d;
+}
+.ingredients .card-header,
+a.ingredients:hover {
+    background-color: #d39d67;
+}
+
+.orders {
+    background-color: #c48aea;
+}
+.orders .card-header,
+a.orders:hover {
+    background-color: #a465ce;
+}
+
+.reports {
+    background-color: #e0e888;
+}
+.reports .card-header,
+a.reports:hover {
+    background-color: #c3cc63;
+}
+
+.card *,
+.card a
+{
+    color: black;
+}
+
+li.nav-item a.nav-link
+{
+    width: 58px;
+}
 /*-------------------CUSTOM BOOTSTRAP----------------*/
 .breadcrumb {
     background-color: transparent;

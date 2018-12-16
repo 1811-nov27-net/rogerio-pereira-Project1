@@ -2,7 +2,141 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-md-12 text-center my-3">
+        <h1>Welcome</h1>
+    </div>
+
+    <!--Customers-->
+    <div class="col-md-4 mt-3">
+        <div class="card text-dark customers">
+            <div class="card-header text-center">
+                <i class="fas fa-users fa-lg mr-1"></i> Customers
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>
+                        <a asp-area="" asp-controller="Customers" asp-action="Create">
+                            New
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Customers" asp-action="Index">
+                            Show all
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--Addresses-->
+    <div class="col-md-4 mt-3">
+        <div class="card text-dark addresses">
+            <div class="card-header text-center">
+                <i class="fas fa-map-marked-alt fa-lg mr-1"></i>Addresses
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>
+                        <a asp-area="" asp-controller="Addresses" asp-action="Create">
+                            New
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Addresses" asp-action="Index">
+                            Show all
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--Pizzas-->
+    <div class="col-md-4 mt-3">
+        <div class="card text-dark pizzas">
+            <div class="card-header text-center">
+                <i class="fas fa-chart-pie fa-lg mr-1"></i> Pizzas
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>
+                        <a asp-area="" asp-controller="Pizzas" asp-action="Create">
+                            New
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Pizzas" asp-action="Index">
+                            Show all
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--Ingredients-->
+    <div class="col-md-4 mt-3">
+        <div class="card text-dark ingredients">
+            <div class="card-header text-center">
+                <i class="fas fa-star fa-lg mr-1"></i> Ingredients
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>
+                        <a asp-area="" asp-controller="Ingredients" asp-action="Create">
+                            New
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Ingredients" asp-action="Index">
+                            Show all
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--Orders-->
+    <div class="col-md-4 mt-3">
+        <div class="card text-dark orders">
+            <div class="card-header text-center">
+                <i class="fas fa-receipt fa-lg mr-1"></i> Orders
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>
+                        <a asp-area="" asp-controller="Orders" asp-action="Create">
+                            New
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Orders" asp-action="Index">
+                            Show all
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--Reports-->
+    <div class="col-md-4 mt-3">
+        <div class="card text-dark reports">
+            <div class="card-header text-center">
+                <i class="fas fa-chart-line fa-lg mr-1"></i>Reports
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>
+                        <a asp-area="" asp-controller="Reports" asp-action="Index">
+                            Show all
+                        </a><br /><br />
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>

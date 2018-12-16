@@ -34,19 +34,34 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Index">Customers</a>
+                            <a class="nav-link text-dark mx-2 btn customers" asp-area="" asp-controller="Customers" asp-action="Index" title="Customers">
+                                <i class="fas fa-users fa-2x"></i>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Addresses" asp-action="Index">Addresses</a>
+                            <a class="nav-link text-dark mx-2 btn addresses" asp-area="" asp-controller="Addresses" asp-action="Index" title="Addresses">
+                                <i class="fas fa-map-marked-alt fa-2x"></i>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Pizzas" asp-action="Index">Pizzas</a>
+                            <a class="nav-link text-dark mx-2 btn pizzas" asp-area="" asp-controller="Pizzas" asp-action="Index" title="Pizzas">
+                                <i class="fas fa-chart-pie fa-2x"></i>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ingredients" asp-action="Index">Ingredients</a>
+                            <a class="nav-link text-dark mx-2 btn ingredients" asp-area="" asp-controller="Ingredients" asp-action="Index" title="Ingredients">
+                                <i class="fas fa-star fa-2x"></i>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
+                            <a class="nav-link text-dark mx-2 btn orders" asp-area="" asp-controller="Orders" asp-action="Index" title="Orders">
+                                <i class="fas fa-receipt fa-2x"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark mx-2 btn reports" asp-area="" asp-controller="Reports" asp-action="Index" title="Reports">
+                                <i class="fas fa-chart-line fa-2x"></i>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -75,7 +90,7 @@
                 <div class="modal-footer">
                     <form id="deleteModal-formDelete" method="post" action="">
                         <input type="hidden" id="deleteModal-formId" value="" />
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-danger btn-ok">Delete</button>
                     </form>
                 </div>
