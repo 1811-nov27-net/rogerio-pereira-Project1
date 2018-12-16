@@ -4,6 +4,7 @@
     }
     else {
         getAddress();
+        getCustomerPreference();
     }
 });
 
@@ -42,6 +43,14 @@ function getAddress() {
     $.get("/Addresses/GetAddressByCustomerId/" + customerId, function (data) {
         $('#address').html(data);
         checkAddress();
+    });
+}
+
+function getCustomerPreference() {
+    var customerId = $('#customer').val();
+
+    $.get("/Pizzas/GetUsersPreferences/" + customerId, function (data) {
+        $('#customersPreference').html(data);
     });
 }
 

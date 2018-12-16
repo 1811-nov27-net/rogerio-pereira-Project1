@@ -126,27 +126,6 @@ namespace Project1.DataAccess.Repositories
             return dt;
         }
 
-        public List<Pizzas> getSuggestedPizzas(int customerId)
-        {
-            List<Pizzas> suggested = new List<Pizzas>();
-            
-            suggested = _db.Pizzas
-                        .FromSql(
-                            "select top(3) o.customerId, count(*) as totalPizza, p.id as pizzaId, p.* " +
-                            "from pizza.orders o " +
-                            "   inner join pizza.orderPizzas op " +
-                            "       on o.id = op.orderId " +
-                            "   inner join pizza.pizzas p " +
-                            "       on op.pizzaId = p.id " +
-                            "group by p.id, p.name, p.price, o.customerId " +
-                            "having o.customerId = @id " +
-                            "order by o.customerId asc, totalPizza desc ",
-                            new SqlParameter("@id", customerId)
-                        ).ToList();
-
-            return suggested;
-        }
-
         public void SaveChanges()
         {
             _db.SaveChanges();

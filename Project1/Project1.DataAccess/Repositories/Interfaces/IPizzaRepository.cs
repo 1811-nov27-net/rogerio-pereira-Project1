@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Project1.DataAccess.Repositories.Interfaces
 {
@@ -15,5 +16,6 @@ namespace Project1.DataAccess.Repositories.Interfaces
         Pizzas Save(Pizzas model, int? id = null);
         void SaveChanges();
         Pizzas Update(Pizzas model, int? id = null);
+        List<Pizzas> getSuggestedPizzas(int customerId);
     }
 }

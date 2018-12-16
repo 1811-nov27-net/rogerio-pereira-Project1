@@ -259,5 +259,20 @@ namespace Project1.WebUi.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        // POST: Pizzas/GetUsersPreferences/5
+        public string GetUsersPreferences(int id)
+        {
+            List<Pizza> pizzas =  Mapper.Map<List<Pizzas>, List<Pizza>>(Repository.getSuggestedPizzas(id));
+
+            string ret = "<ul>";
+            foreach(Pizza pizza in pizzas)
+            {
+                ret += $"<li>{pizza.Name}</li>";
+            }
+            ret += "</ul>";
+
+            return ret;
+        }
     }
 }

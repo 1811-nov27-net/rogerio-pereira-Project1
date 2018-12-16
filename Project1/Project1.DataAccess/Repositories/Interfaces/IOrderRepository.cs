@@ -14,7 +14,6 @@ namespace Project1.DataAccess.Repositories.Interfaces
         Orders GetById(int id);
         IList GetByName(string name);
         DateTime getLastOrderDate(int addressId);
-        List<Pizzas> getSuggestedPizzas(int customerId);
         Orders Save(Orders model, int? id = null);
         void SaveChanges();
         Orders Update(Orders model, int? id = null);
