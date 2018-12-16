@@ -130,5 +130,18 @@ namespace Project1.DataAccess.Repositories
         {
             _db.SaveChanges();
         }
+
+        public decimal GetTotalOfDay(DateTime today)
+        {
+            decimal totalOfDay = _db.Pizzas
+                                    .FromSql(
+                                        "select sum(value) as Price" +
+                                        "from pizza.orders o " +
+                                        "group by o.Date" +
+                                        "having o.Date = @id ",
+                                        new SqlParameter("@id", today)
+                                    ).First().Price;
+            return totalOfDay;
+        }
     }
 }

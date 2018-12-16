@@ -17,5 +17,6 @@ namespace Project1.DataAccess.Repositories.Interfaces
         Orders Save(Orders model, int? id = null);
         void SaveChanges();
         Orders Update(Orders model, int? id = null);
+        decimal GetTotalOfDay(DateTime today);
     }
 }

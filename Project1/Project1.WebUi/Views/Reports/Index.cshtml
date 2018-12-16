@@ -1,0 +1,16 @@
+﻿@model Project1.WebUi.Models.ViewModels.Reports
+
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<div class="col-md-12 text-center my-3">
+    <h1>Reports</h1>
+
+    @Html.DisplayFor(model => model.TotalOfDay)
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
