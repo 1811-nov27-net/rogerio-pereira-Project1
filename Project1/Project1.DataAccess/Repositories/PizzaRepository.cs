@@ -46,12 +46,20 @@ namespace Project1.DataAccess.Repositories
 
         public Pizzas GetById(int id)
         {
-            return _db.Pizzas
-                    .Include(pizza => pizza.PizzasIngredients)
-                    .ThenInclude(pizzasIngredients => pizzasIngredients.Ingredient)
-                    .Where(model => model.Id == id)
-                    .ToList()
-                    .First();
+            try
+            {
+                Pizzas pizza = _db.Pizzas
+                                    .Include(p => p.PizzasIngredients)
+                                    .ThenInclude(pizzasIngredients => pizzasIngredients.Ingredient)
+                                    .Where(model => model.Id == id)
+                                    .ToList()
+                                    .First();
+                return pizza;
+            }
+            catch(Exception)
+            {
+                return null;
+            }
         }
 
         public IList GetByName(string name)
@@ -85,20 +93,27 @@ namespace Project1.DataAccess.Repositories
                 throw new ArgumentException("Nedded id", nameof(id));
             }
 
-            Pizzas tracked = _db.Pizzas
-                    .Include(pizza => pizza.PizzasIngredients)
-                    .ThenInclude(pizzasIngredients => pizzasIngredients.Ingredient)
-                    .Where(pizza => pizza.Id == id)
-                    .First();
-            if (tracked == null)
+            try
+            {
+                Pizzas tracked = _db.Pizzas
+                        .Include(pizza => pizza.PizzasIngredients)
+                        .ThenInclude(pizzasIngredients => pizzasIngredients.Ingredient)
+                        .Where(pizza => pizza.Id == id)
+                        .First();
+                if (tracked == null)
+                {
+                    throw new ArgumentException("No Pizza with this id", nameof(id));
+                }
+
+                _db.Entry(tracked).CurrentValues.SetValues(model);
+                tracked.PizzasIngredients = model.PizzasIngredients;
+
+                return (Pizzas)model;
+            }
+            catch(Exception e)
             {
                 throw new ArgumentException("No Pizza with this id", nameof(id));
             }
-
-            _db.Entry(tracked).CurrentValues.SetValues(model);
-            tracked.PizzasIngredients = model.PizzasIngredients;
-
-            return (Pizzas)model;
         }
 
         public bool CheckStock(Pizzas pizza)
