@@ -1,10 +1,11 @@
-﻿using Project0.Library.Model;
+﻿using Project1.WebUi.Controllers.Exceptions;
+using Project1.WebUi.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Project1.Tests.Library.Model
+namespace Project1.Tests.WebUi.Models
 {
     public class OrderTest
     {
@@ -23,7 +24,7 @@ namespace Project1.Tests.Library.Model
                 o.AddPizza(p);
             }
 
-            Assert.Equal(12, o.Pizzas.Count);
+            Assert.Equal(12, o.OrderPizzas.Count);
         }
 
         [Fact]
@@ -31,7 +32,7 @@ namespace Project1.Tests.Library.Model
         {
             Order o = new Order();
 
-            for (int i=0; i<13; i++)
+            for (int i=0; i<12; i++)
             {
                 Pizza p = new Pizza();
                 p.Id = 1;
@@ -41,7 +42,14 @@ namespace Project1.Tests.Library.Model
                 o.AddPizza(p);
             }
 
-            Assert.Equal(12, o.Pizzas.Count);
+            //Pizza 13
+            Pizza p13 = new Pizza();
+            p13.Id = 1;
+            p13.Name = "Pizza";
+            p13.Price = 10;
+
+            Assert.Throws<MaximumQuantityException>(() => o.AddPizza(p13));
+            Assert.Equal(12, o.OrderPizzas.Count);
         }
 
 
@@ -50,7 +58,7 @@ namespace Project1.Tests.Library.Model
         {
             Order o = new Order();
 
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Pizza p = new Pizza();
                 p.Id = 1;
@@ -60,7 +68,15 @@ namespace Project1.Tests.Library.Model
                 o.AddPizza(p);
             }
 
-            Assert.Equal(10, o.Pizzas.Count);
+            //Pizza 11
+            Pizza p11 = new Pizza();
+            p11.Id = 1;
+            p11.Name = "Pizza";
+            p11.Price = 10;
+
+            Assert.Throws<MaximumAmountException>(() => o.AddPizza(p11));
+            Assert.Equal(10, o.OrderPizzas.Count);
+            Assert.Equal(500, o.Value);
         }
 
         [Theory]
@@ -75,16 +91,21 @@ namespace Project1.Tests.Library.Model
         [InlineData(2, 0, true)]
         [InlineData(2, 1, true)]
         [InlineData(3, 0, true)]
-        public void checkTimeBeforeTwoHours(int hours, int minutes, bool assert)
+        public void checkTimeBeforeTwoHours(int hours, int minutes, bool pass)
         {
             DateTime time = DateTime.Now;
             time = time.AddHours(-hours).AddMinutes(-minutes);
 
             Order o = new Order();
 
-            bool canOrder = o.canOrderFromSameAddress(time);
+            if (pass == true)
+            {
+                bool canOrder = o.canOrderFromSameAddress(time);
 
-            Assert.Equal(assert, canOrder);
+                Assert.Equal(pass, canOrder);
+            }
+            else
+                Assert.Throws<SamePlaceException>(() => o.canOrderFromSameAddress(time));
         }
     }
 }
