@@ -32,6 +32,7 @@ steps:
     projects: Project1/Project1.WebUi
     publishWebProjects: false
     arguments: --output $(Build.ArtifactStagingDirectory)
+    zipAfterPublish: true
   displayName: dotnet publish
 
 - task: PublishBuildArtifacts@1
