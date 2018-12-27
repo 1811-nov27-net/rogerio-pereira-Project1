@@ -13,21 +13,22 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: |
-    cd Project1
-    dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
-- script: |
-    cd Project1
-    dotnet test --configuration $(buildConfiguration) --logger trx
-  displayName: 'dotnet test $(buildConfiguration)'
-- script: |
-    cd Project1
-    dotnet publish Project1.WebUi --configuration $(buildConfiguration) -o ../publish
-  displayName: 'dotnet publish $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  inputs: 
+    command: build
+    projects: Project1
+  displayName: dotnet build
 
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
+- task: DotNetCoreCLI@2
+  inputs: 
+    command: test
+    projects: Project1
+    publishTestResults: true
+  displayName: dotnet test
+
+- task: DotNetCoreCLI@2
+  inputs: 
+    command: publish
+    projects: Project1/Project1.WebUi
+    publishWebProjects: false
+  displayName: dotnet publish
