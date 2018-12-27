@@ -42,4 +42,4 @@ steps:
     azureSubscription: Project1
     webAppName: Project1
     takeAppOfflineFlag: true
-    package: $(System.ArtifactStagingDirectory)/**/*.zip
+    package: '$(System.ArtifactStagingDirectory)/**/*.zip'
