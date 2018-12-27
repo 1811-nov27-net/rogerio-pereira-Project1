@@ -31,15 +31,16 @@ steps:
     command: publish
     projects: Project1/Project1.WebUi
     publishWebProjects: false
-    arguments: --output $(Build.ArtifactStagingDirectory)
+    #arguments: --output $(Build.ArtifactStagingDirectory)
+    arguments: --output $(System.DefaultWorkingDirectory)/publish
     zipAfterPublish: true
   displayName: dotnet publish
 
-- task: PublishBuildArtifacts@1
+#- task: PublishBuildArtifacts@1
 
 - task: AzureRmWebAppDeployment@4
   inputs:
     azureSubscription: Project1
     webAppName: Project1
     takeAppOfflineFlag: true
-    package: '$(System.ArtifactStagingDirectory)/**/*.zip'
+    package: 'publish/*.zip'
