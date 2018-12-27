@@ -31,4 +31,13 @@ steps:
     command: publish
     projects: Project1/Project1.WebUi
     publishWebProjects: false
+    arguments: --output $(Build.ArtifactStagingDirectory)
   displayName: dotnet publish
+
+- task: PublishBuildArtifacts@1
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    azureSubscription: Project1
+    webAppName: Project1
+    takeAppOfflineFlag: true
