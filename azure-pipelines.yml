@@ -19,9 +19,15 @@ steps:
   displayName: 'dotnet build $(buildConfiguration)'
 - script: |
     cd Project1
-    dotnet test --configuration $(buildConfiguration)
+    dotnet test --configuration $(buildConfiguration) --logger trx
   displayName: 'dotnet test $(buildConfiguration)'
 - script: |
     cd Project1
     dotnet publish Project1.WebUi --configuration $(buildConfiguration) -o ../publish
   displayName: 'dotnet publish $(buildConfiguration)'
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
